@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, User, Menu as MenuIcon } from 'lucide-react';
+import { ShoppingCart, Menu as MenuIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Button from '@/components/ui/Button';
 import { useCart } from '@/hooks/useCart';
@@ -15,159 +15,83 @@ const Header: React.FC = () => {
 
   const totalItems = getTotalItems();
 
-  const isActive = (path: string) => location.pathname === path;
-
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-neutral-200 bg-white/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 w-full bg-white border-b border-neutral-200">
       <div className="container-padding mx-auto">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-14 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-500 text-white font-bold">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-800 text-white font-bold text-sm">
               SK
             </div>
-            <span className="text-xl font-bold text-neutral-900">Food</span>
+            <span className="text-lg font-semibold text-neutral-900">SKFood</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link
-              to="/"
-              className={cn(
-                'text-sm font-medium transition-colors hover:text-primary-500',
-                isActive('/') ? 'text-primary-500' : 'text-neutral-600'
-              )}
-            >
-              Home
-            </Link>
-            <Link
-              to="/orders"
-              className={cn(
-                'text-sm font-medium transition-colors hover:text-primary-500',
-                isActive('/orders') ? 'text-primary-500' : 'text-neutral-600'
-              )}
-            >
-              Orders
-            </Link>
-          </nav>
-
-          {/* Actions */}
-          <div className="flex items-center space-x-4">
-            {/* Cart Button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleCart}
-              className="relative p-2"
-              aria-label={`Cart with ${totalItems} items`}
-            >
-              <ShoppingCart className="h-5 w-5" />
-              {totalItems > 0 && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary-500 text-xs font-medium text-white"
-                >
-                  {totalItems > 9 ? '9+' : totalItems}
-                </motion.span>
-              )}
-            </Button>
-
-            {/* User Menu */}
+          {/* Right Actions */}
+          <div className="flex items-center space-x-3">
+            {/* Login Button or User Menu */}
             {isAuthenticated ? (
-              <div className="relative">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="flex items-center space-x-2 p-2"
-                >
-                  {user?.picture ? (
-                    <img
-                      src={user.picture}
-                      alt={user.name}
-                      className="h-6 w-6 rounded-full"
-                    />
-                  ) : (
-                    <User className="h-5 w-5" />
-                  )}
-                  <span className="hidden sm:inline text-sm">{user?.name}</span>
-                </Button>
-
-                {/* Dropdown Menu */}
-                {isMenuOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="absolute right-0 mt-2 w-48 rounded-lg bg-white py-2 shadow-lg border border-neutral-200"
-                  >
-                    <Link
-                      to="/orders"
-                      className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      My Orders
-                    </Link>
-                    <button
-                      onClick={() => {
-                        logout();
-                        setIsMenuOpen(false);
-                      }}
-                      className="block w-full px-4 py-2 text-left text-sm text-neutral-700 hover:bg-neutral-50"
-                    >
-                      Logout
-                    </button>
-                  </motion.div>
-                )}
-              </div>
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-sm text-neutral-600 hover:text-neutral-900"
+              >
+                {user?.name || 'User'}
+              </button>
             ) : (
               <Link to="/login">
-                <Button size="sm">Login</Button>
+                <button className="text-sm text-neutral-600 hover:text-neutral-900 bg-neutral-100 px-3 py-1.5 rounded-lg">
+                  LOGIN
+                </button>
               </Link>
             )}
 
-            {/* Mobile Menu Button */}
+            {/* Menu Button */}
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden p-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2"
             >
-              <MenuIcon className="h-5 w-5" />
+              <MenuIcon className="h-5 w-5 text-neutral-600" />
             </Button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Menu */}
         {isMenuOpen && (
-          <motion.nav
+          <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
-            className="md:hidden border-t border-neutral-200 py-4"
+            className="border-t border-neutral-200 py-4"
           >
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-3">
               <Link
                 to="/"
-                className={cn(
-                  'text-sm font-medium',
-                  isActive('/') ? 'text-primary-500' : 'text-neutral-600'
-                )}
+                className="text-sm text-neutral-700 hover:text-neutral-900"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
               <Link
                 to="/orders"
-                className={cn(
-                  'text-sm font-medium',
-                  isActive('/orders') ? 'text-primary-500' : 'text-neutral-600'
-                )}
+                className="text-sm text-neutral-700 hover:text-neutral-900"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Orders
+                My Orders
               </Link>
+              {isAuthenticated && (
+                <button
+                  onClick={() => {
+                    logout();
+                    setIsMenuOpen(false);
+                  }}
+                  className="text-sm text-neutral-700 hover:text-neutral-900 text-left"
+                >
+                  Logout
+                </button>
+              )}
             </div>
-          </motion.nav>
+          </motion.div>
         )}
       </div>
     </header>

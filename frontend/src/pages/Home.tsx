@@ -13,192 +13,163 @@ const Home: React.FC = () => {
 
   const currentHour = new Date().getHours();
   const isLunchTime = currentHour >= 11 && currentHour < 16;
-  const isDinnerTime = currentHour >= 18 && currentHour < 23;
-
-  const getCurrentMeal = () => {
-    if (isLunchTime) return 'lunch';
-    if (isDinnerTime) return 'dinner';
-    return currentHour < 11 ? 'lunch' : 'dinner';
-  };
-
-  const currentMeal = getCurrentMeal();
-  const currentMenu = currentMeal === 'lunch' ? lunchMenu?.[0] : dinnerMenu?.[0];
 
   return (
-    <div className="container-padding mx-auto py-8">
-      {/* Hero Section */}
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-12"
-      >
-        <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-4">
-          Today's Fresh{' '}
-          <span className="text-primary-500">
-            {currentMeal === 'lunch' ? 'Lunch' : 'Dinner'}
-          </span>
-        </h1>
-        <p className="text-lg text-neutral-600 mb-8 max-w-2xl mx-auto">
-          Delicious, home-style meals prepared fresh daily. Choose your favorites and get it delivered hot to your doorstep.
-        </p>
+    <div className="min-h-screen bg-neutral-100 pb-20">
+      <div className="container-padding mx-auto py-6">
+        {/* Greeting */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-6"
+        >
+          <h1 className="text-lg text-neutral-700 mb-1">
+            Oh Hello paaji..
+          </h1>
+          <h2 className="text-xl font-semibold text-neutral-900">
+            {isLunchTime ? 'Lunch Time!!' : 'Hello Vinay, Lunch Time!!'}
+          </h2>
+        </motion.div>
 
-        {/* Time indicator */}
-        <div className="flex items-center justify-center space-x-2 mb-8">
-          <Clock className="h-5 w-5 text-primary-500" />
-          <span className="text-sm font-medium text-neutral-700">
-            {isLunchTime && 'Lunch time (11 AM - 4 PM)'}
-            {isDinnerTime && 'Dinner time (6 PM - 11 PM)'}
-            {!isLunchTime && !isDinnerTime && 'Order for next meal'}
-          </span>
-        </div>
+        {/* Hero Image with Person */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1 }}
+          className="relative mb-6"
+        >
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <p className="text-xs text-neutral-600 leading-relaxed mb-4">
+                  Craving some authentic homestyle meals?<br/>
+                  We've got you covered with fresh,<br/>
+                  delicious thalis made with love.<br/>
+                  Perfect for students and working<br/>
+                  professionals who miss home food.
+                </p>
+              </div>
+              <div className="w-24 h-24 ml-4">
+                <img
+                  src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&dpr=1"
+                  alt="Chef"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/meal-builder/lunch">
-            <Button size="lg" className="w-full sm:w-auto">
-              Build Lunch Thali
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
-          <Link to="/meal-builder/dinner">
-            <Button variant="outline" size="lg" className="w-full sm:w-auto">
-              Build Dinner Thali
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
-        </div>
-      </motion.section>
-
-      {/* Today's Menu Preview */}
-      {currentMenu && (
-        <motion.section
+        {/* Meal Type Buttons */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mb-12"
+          className="flex space-x-3 mb-6"
         >
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-neutral-900 mb-2">
-              Today's {currentMeal === 'lunch' ? 'Lunch' : 'Dinner'} Menu
-            </h2>
-            <p className="text-neutral-600">
-              Fresh ingredients, authentic flavors
+          <Link to="/meal-builder/lunch" className="flex-1">
+            <button className="w-full bg-neutral-800 text-white py-3 px-6 rounded-full text-sm font-medium hover:bg-neutral-700 transition-colors">
+              Lunch
+            </button>
+          </Link>
+          <Link to="/meal-builder/dinner" className="flex-1">
+            <button className="w-full bg-neutral-800 text-white py-3 px-6 rounded-full text-sm font-medium hover:bg-neutral-700 transition-colors">
+              Dinner
+            </button>
+          </Link>
+        </motion.div>
+
+        {/* Today's Fresh Meal */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mb-6"
+        >
+          <div className="text-center mb-4">
+            <h3 className="text-lg font-semibold text-neutral-900 mb-1">
+              Today's Fresh
+            </h3>
+            <h4 className="text-lg font-semibold text-primary-500">
+              Home-Style Meal
+            </h4>
+            <p className="text-sm text-neutral-600 mt-2">
+              Authentic Indian thali delivered to your hostel
             </p>
           </div>
 
-          <Card className="p-6 max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              {/* Menu Items */}
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-neutral-900">
-                    Available Sabjis
-                  </h3>
-                  <div className="flex items-center space-x-1">
-                    <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                    <span className="text-sm text-neutral-600">Fresh today</span>
-                  </div>
-                </div>
+          {/* Food Image */}
+          <div className="relative mb-4">
+            <img
+              src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&dpr=1"
+              alt="Fresh Thali"
+              className="w-full h-40 object-cover rounded-2xl"
+            />
+          </div>
 
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  {currentMenu.listOfSabjis.slice(0, 4).map((sabji, index) => (
-                    <motion.div
-                      key={sabji.name}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.1 * index }}
-                      className="flex items-center space-x-3 p-3 rounded-lg bg-neutral-50"
-                    >
-                      <img
-                        src={sabji.imageUrl || 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1'}
-                        alt={sabji.name}
-                        className="w-10 h-10 rounded-lg object-cover"
-                      />
-                      <div>
-                        <p className="text-sm font-medium text-neutral-900">
-                          {sabji.name}
-                        </p>
-                        {sabji.isSpecial && (
-                          <span className="text-xs text-primary-600 font-medium">
-                            Special
-                          </span>
-                        )}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-neutral-600">Starting from</p>
-                    <p className="text-2xl font-bold text-primary-500">
-                      {formatPrice(currentMenu.basePrice)}
-                    </p>
-                  </div>
-                  <Link to={`/meal-builder/${currentMeal}`}>
-                    <Button>
-                      Customize Thali
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-
-              {/* Visual */}
-              <div className="relative">
-                <div className="aspect-square rounded-2xl bg-gradient-to-br from-primary-100 to-primary-200 p-8 flex items-center justify-center">
-                  <img
-                    src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1"
-                    alt="Fresh Thali"
-                    className="w-full h-full object-cover rounded-xl shadow-lg"
-                  />
-                </div>
-                <div className="absolute -top-4 -right-4 bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                  Fresh Today
-                </div>
+          {/* Price and Details */}
+          <div className="bg-white rounded-2xl p-4 shadow-sm">
+            <div className="flex items-center justify-between mb-3">
+              <div className="text-2xl font-bold text-neutral-900">₹120</div>
+              <div className="flex items-center space-x-1 text-sm text-neutral-600">
+                <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                <span>4.8 (284 reviews)</span>
               </div>
             </div>
-          </Card>
-        </motion.section>
-      )}
 
-      {/* Features */}
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="grid md:grid-cols-3 gap-6"
-      >
-        <Card className="p-6 text-center">
-          <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <Clock className="h-6 w-6 text-primary-500" />
-          </div>
-          <h3 className="font-semibold text-neutral-900 mb-2">Quick Delivery</h3>
-          <p className="text-sm text-neutral-600">
-            Fresh meals delivered within 30 minutes to your location
-          </p>
-        </Card>
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center space-x-2 text-sm text-neutral-600">
+                <Clock className="h-4 w-4" />
+                <span>30-40 min delivery</span>
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-neutral-600">
+                <span>🍽️</span>
+                <span>Popular with students</span>
+              </div>
+            </div>
 
-        <Card className="p-6 text-center">
-          <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <Star className="h-6 w-6 text-primary-500" />
+            <Link to="/meal-builder/lunch">
+              <button className="w-full bg-primary-500 text-white py-3 px-6 rounded-full font-medium hover:bg-primary-600 transition-colors flex items-center justify-center space-x-2">
+                <span>Build Your Thali</span>
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </Link>
           </div>
-          <h3 className="font-semibold text-neutral-900 mb-2">Fresh Ingredients</h3>
-          <p className="text-sm text-neutral-600">
-            Made with the freshest ingredients sourced daily from local markets
-          </p>
-        </Card>
+        </motion.div>
 
-        <Card className="p-6 text-center">
-          <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <ArrowRight className="h-6 w-6 text-primary-500" />
+        {/* Most Popular Combo */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <h3 className="text-lg font-semibold text-neutral-900 mb-4">
+            Most Popular Combo
+          </h3>
+          
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-white rounded-xl p-3 shadow-sm">
+              <img
+                src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=200&h=120&dpr=1"
+                alt="Combo 1"
+                className="w-full h-20 object-cover rounded-lg mb-2"
+              />
+              <p className="text-sm font-medium text-neutral-900">₹120</p>
+              <p className="text-xs text-neutral-600">Dal + Sabji</p>
+            </div>
+            
+            <div className="bg-white rounded-xl p-3 shadow-sm">
+              <img
+                src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=200&h=120&dpr=1"
+                alt="Combo 2"
+                className="w-full h-20 object-cover rounded-lg mb-2"
+              />
+              <p className="text-sm font-medium text-neutral-900">₹140</p>
+              <p className="text-xs text-neutral-600">Special Thali</p>
+            </div>
           </div>
-          <h3 className="font-semibold text-neutral-900 mb-2">Easy Ordering</h3>
-          <p className="text-sm text-neutral-600">
-            Simple 3-step process to customize and order your perfect thali
-          </p>
-        </Card>
-      </motion.section>
+        </motion.div>
+      </div>
     </div>
   );
 };
