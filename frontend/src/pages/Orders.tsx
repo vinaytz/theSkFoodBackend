@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, CheckCircle, RotateCcw, Copy } from 'lucide-react';
+import { Clock, CircleCheck as CheckCircle, RotateCcw, Copy } from 'lucide-react';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import { useMyOrders } from '@/services/queries';
