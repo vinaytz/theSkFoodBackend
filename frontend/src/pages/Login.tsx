@@ -109,7 +109,7 @@ const Login: React.FC = () => {
 
             {loginError && (
               <div className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">
-                {loginError.response?.data?.message || 'Login failed. Please try again.'}
+                {(loginError as any).response?.data?.message || 'Login failed. Please try again.'}
               </div>
             )}
 

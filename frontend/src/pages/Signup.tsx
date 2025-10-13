@@ -157,7 +157,7 @@ const Signup: React.FC = () => {
 
             {signupError && (
               <div className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">
-                {signupError.response?.data?.message || 'Signup failed. Please try again.'}
+                {(signupError as any).response?.data?.message || 'Signup failed. Please try again.'}
               </div>
             )}
 

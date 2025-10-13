@@ -32,10 +32,10 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 
     return (
       <Component
-        ref={ref}
+        ref={ref as any}
         className={cn(baseClasses, variants[variant], interactiveClasses, className)}
         {...motionProps}
-        {...props}
+        {...(props as any)}
       >
         {children}
       </Component>

@@ -32,7 +32,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(baseClasses, variants[variant], sizes[size], className)}
         disabled={disabled || isLoading}
         whileTap={{ scale: 0.98 }}
-        {...props}
+        {...(props as any)}
       >
         {isLoading ? (
           <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
