@@ -5,7 +5,6 @@ import { useAuth } from '@/hooks/useAuth';
 // Lazy load pages for better performance
 const Home = React.lazy(() => import('@/pages/Home'));
 const MealBuilder = React.lazy(() => import('@/pages/MealBuilder'));
-const Cart = React.lazy(() => import('@/pages/CartSummary'));
 const Checkout = React.lazy(() => import('@/pages/Checkout'));
 const Orders = React.lazy(() => import('@/pages/Orders'));
 const Login = React.lazy(() => import('@/pages/Login'));
@@ -79,14 +78,6 @@ const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute>
               <MealBuilder />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <ProtectedRoute>
-              <Cart />
             </ProtectedRoute>
           }
         />
